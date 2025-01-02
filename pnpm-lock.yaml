@@ -38,6 +38,12 @@ importers:
       pnpm:
         specifier: 9.14.4
         version: 9.14.4
+      react-icons:
+        specifier: ^5.4.0
+        version: 5.4.0(react@18.3.1)
+      react-markdown:
+        specifier: ^9.0.1
+        version: 9.0.1(@types/react@18.3.12)(react@18.3.1)
       sharp:
         specifier: 0.33.5
         version: 0.33.5
@@ -654,7 +660,7 @@ importers:
         version: link:../core
       '@lens-protocol/client':
         specifier: 2.2.0
-        version: 2.2.0(@jest/globals@29.7.0)(@lens-protocol/metadata@1.2.0(zod@3.23.8))(bufferutil@4.0.8)(encoding@0.1.13)(ethers@6.13.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)
+        version: 2.2.0(@jest/globals@29.7.0)(@lens-protocol/metadata@1.2.0(zod@3.23.8))(bufferutil@4.0.8)(encoding@0.1.13)(ethers@6.13.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(react@18.3.1)(utf-8-validate@5.0.10)
       '@lens-protocol/metadata':
         specifier: 1.2.0
         version: 1.2.0(zod@3.23.8)
@@ -12359,6 +12365,9 @@ packages:
     resolution: {integrity: sha512-qY60FjREgVZL03vJU6IfMV4GDjGBIoOyvuFdpBDIX9yTlDw0TjxVBQp+P8NvpdIXNJvfWBTNul7fsAQJq2FNpg==}
     engines: {node: '>=14'}
 
+  html-url-attributes@3.0.1:
+    resolution: {integrity: sha512-ol6UPyBWqsrO6EJySPz2O7ZSr856WDrEzM5zMqp+FJJLGMW35cLYmmZnl0vztAZxRUoNZJFTCohfjuIJ8I4QBQ==}
+
   html-void-elements@3.0.0:
     resolution: {integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==}
 
@@ -16517,6 +16526,11 @@ packages:
     peerDependencies:
       react: ^16.6.0 || ^17.0.0 || ^18.0.0
 
+  react-icons@5.4.0:
+    resolution: {integrity: sha512-7eltJxgVt7X64oHh6wSWNwwbKTCtMfK35hcjvJS0yxEAhPM8oUKdS3+kqaW1vicIltw+kR2unHaa12S9pPALoQ==}
+    peerDependencies:
+      react: '*'
+
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -16535,6 +16549,12 @@ packages:
     peerDependencies:
       react-loadable: '*'
       webpack: '>=4.41.1 || 5.x'
+
+  react-markdown@9.0.1:
+    resolution: {integrity: sha512-186Gw/vF1uRkydbsOIkcGXw7aHq0sZOCRFFjGrr7b9+nVZg4UfA4enXCaxm4fUzecU38sWfrNDitGhshuU7rdg==}
+    peerDependencies:
+      '@types/react': '>=18'
+      react: '>=18'
 
   react-refresh@0.14.2:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
@@ -19569,7 +19589,7 @@ snapshots:
   '@acuminous/bitsyntax@0.1.2':
     dependencies:
       buffer-more-ints: 1.0.0
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       safe-buffer: 5.1.2
     transitivePeerDependencies:
       - supports-color
@@ -21502,7 +21522,7 @@ snapshots:
     dependencies:
       '@scure/bip32': 1.6.0
       abitype: 1.0.8(typescript@5.6.3)(zod@3.23.8)
-      axios: 1.7.9(debug@4.4.0)
+      axios: 1.7.9
       axios-mock-adapter: 1.22.0(axios@1.7.9)
       axios-retry: 4.5.0(axios@1.7.9)
       bip32: 4.0.0
@@ -23333,7 +23353,7 @@ snapshots:
   '@eslint/config-array@0.19.1':
     dependencies:
       '@eslint/object-schema': 2.1.5
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -23359,7 +23379,7 @@ snapshots:
   '@eslint/eslintrc@3.2.0':
     dependencies:
       ajv: 6.12.6
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       espree: 10.3.0
       globals: 14.0.0
       ignore: 5.3.2
@@ -24435,7 +24455,7 @@ snapshots:
       - utf-8-validate
       - wait-for-expect
 
-  '@lens-protocol/client@2.2.0(@jest/globals@29.7.0)(@lens-protocol/metadata@1.2.0(zod@3.23.8))(bufferutil@4.0.8)(encoding@0.1.13)(ethers@6.13.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)':
+  '@lens-protocol/client@2.2.0(@jest/globals@29.7.0)(@lens-protocol/metadata@1.2.0(zod@3.23.8))(bufferutil@4.0.8)(encoding@0.1.13)(ethers@6.13.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(react@18.3.1)(utf-8-validate@5.0.10)':
     dependencies:
       '@ethersproject/abi': 5.7.0
       '@ethersproject/abstract-signer': 5.7.0
@@ -24446,7 +24466,7 @@ snapshots:
       '@ethersproject/providers': 5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@ethersproject/wallet': 5.7.0
       '@lens-protocol/blockchain-bindings': 0.10.2(@jest/globals@29.7.0)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      '@lens-protocol/gated-content': 0.5.1(@ethersproject/abi@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)(@lens-protocol/metadata@1.2.0(zod@3.23.8))(bufferutil@4.0.8)(encoding@0.1.13)(ethers@6.13.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)(zod@3.23.8)
+      '@lens-protocol/gated-content': 0.5.1(@ethersproject/abi@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)(@lens-protocol/metadata@1.2.0(zod@3.23.8))(bufferutil@4.0.8)(encoding@0.1.13)(ethers@6.13.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(react@18.3.1)(utf-8-validate@5.0.10)(zod@3.23.8)
       '@lens-protocol/shared-kernel': 0.12.0
       '@lens-protocol/storage': 0.8.1
       graphql: 16.10.0
@@ -24495,7 +24515,7 @@ snapshots:
     optionalDependencies:
       '@jest/globals': 29.7.0
 
-  '@lens-protocol/gated-content@0.5.1(@ethersproject/abi@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)(@lens-protocol/metadata@1.2.0(zod@3.23.8))(bufferutil@4.0.8)(encoding@0.1.13)(ethers@6.13.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(utf-8-validate@5.0.10)(zod@3.23.8)':
+  '@lens-protocol/gated-content@0.5.1(@ethersproject/abi@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)(@lens-protocol/metadata@1.2.0(zod@3.23.8))(bufferutil@4.0.8)(encoding@0.1.13)(ethers@6.13.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(react@18.3.1)(utf-8-validate@5.0.10)(zod@3.23.8)':
     dependencies:
       '@ethersproject/abi': 5.7.0
       '@ethersproject/address': 5.7.0
@@ -24510,7 +24530,7 @@ snapshots:
       '@lit-protocol/constants': 2.1.62
       '@lit-protocol/crypto': 2.1.62(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@lit-protocol/encryption': 2.1.62(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      '@lit-protocol/node-client': 2.1.62(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
+      '@lit-protocol/node-client': 2.1.62(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)(bufferutil@4.0.8)(encoding@0.1.13)(react@18.3.1)(utf-8-validate@5.0.10)
       '@lit-protocol/types': 2.1.62
       siwe: 2.3.2(ethers@6.13.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       tslib: 2.8.1
@@ -24678,14 +24698,14 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@lit-protocol/auth-browser@2.1.62(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
+  '@lit-protocol/auth-browser@2.1.62(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)(bufferutil@4.0.8)(encoding@0.1.13)(react@18.3.1)(utf-8-validate@5.0.10)':
     dependencies:
       '@lit-protocol/constants': 2.1.62
       '@lit-protocol/misc': 2.1.62
       '@lit-protocol/misc-browser': 2.1.62(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@lit-protocol/types': 2.1.62
       '@lit-protocol/uint8arrays': 2.1.62
-      '@walletconnect/ethereum-provider': 2.17.3(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
+      '@walletconnect/ethereum-provider': 2.17.3(bufferutil@4.0.8)(encoding@0.1.13)(react@18.3.1)(utf-8-validate@5.0.10)
       ethers: 5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       lit-connect-modal: 0.1.11
       lit-siwe: 1.1.8(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)
@@ -24786,10 +24806,10 @@ snapshots:
 
   '@lit-protocol/nacl@2.1.62': {}
 
-  '@lit-protocol/node-client@2.1.62(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
+  '@lit-protocol/node-client@2.1.62(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)(bufferutil@4.0.8)(encoding@0.1.13)(react@18.3.1)(utf-8-validate@5.0.10)':
     dependencies:
       '@lit-protocol/access-control-conditions': 2.1.62(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      '@lit-protocol/auth-browser': 2.1.62(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
+      '@lit-protocol/auth-browser': 2.1.62(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@ethersproject/wallet@5.7.0)(bufferutil@4.0.8)(encoding@0.1.13)(react@18.3.1)(utf-8-validate@5.0.10)
       '@lit-protocol/bls-sdk': 2.1.62
       '@lit-protocol/constants': 2.1.62
       '@lit-protocol/crypto': 2.1.62(bufferutil@4.0.8)(utf-8-validate@5.0.10)
@@ -24801,7 +24821,7 @@ snapshots:
       '@lit-protocol/nacl': 2.1.62
       '@lit-protocol/types': 2.1.62
       '@lit-protocol/uint8arrays': 2.1.62
-      '@walletconnect/ethereum-provider': 2.17.3(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
+      '@walletconnect/ethereum-provider': 2.17.3(bufferutil@4.0.8)(encoding@0.1.13)(react@18.3.1)(utf-8-validate@5.0.10)
       ethers: 5.7.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       jszip: 3.10.1
       lit-connect-modal: 0.1.11
@@ -28701,7 +28721,7 @@ snapshots:
       '@typescript-eslint/types': 8.16.0
       '@typescript-eslint/typescript-estree': 8.16.0(typescript@5.6.3)
       '@typescript-eslint/visitor-keys': 8.16.0
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       eslint: 9.16.0(jiti@2.4.2)
     optionalDependencies:
       typescript: 5.6.3
@@ -28734,7 +28754,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 8.16.0(typescript@5.6.3)
       '@typescript-eslint/utils': 8.16.0(eslint@9.16.0(jiti@2.4.2))(typescript@5.6.3)
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       eslint: 9.16.0(jiti@2.4.2)
       ts-api-utils: 1.4.3(typescript@5.6.3)
     optionalDependencies:
@@ -28765,7 +28785,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.16.0
       '@typescript-eslint/visitor-keys': 8.16.0
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       fast-glob: 3.3.2
       is-glob: 4.0.3
       minimatch: 9.0.5
@@ -29066,7 +29086,7 @@ snapshots:
     dependencies:
       tslib: 1.14.1
 
-  '@walletconnect/ethereum-provider@2.17.3(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
+  '@walletconnect/ethereum-provider@2.17.3(bufferutil@4.0.8)(encoding@0.1.13)(react@18.3.1)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/jsonrpc-http-connection': 1.0.8(encoding@0.1.13)
       '@walletconnect/jsonrpc-provider': 1.0.14
@@ -29555,7 +29575,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -29904,13 +29924,13 @@ snapshots:
 
   axios-mock-adapter@1.22.0(axios@1.7.9):
     dependencies:
-      axios: 1.7.9(debug@4.4.0)
+      axios: 1.7.9
       fast-deep-equal: 3.1.3
       is-buffer: 2.0.5
 
   axios-retry@4.5.0(axios@1.7.9):
     dependencies:
-      axios: 1.7.9(debug@4.4.0)
+      axios: 1.7.9
       is-retry-allowed: 2.2.0
 
   axios@0.21.4:
@@ -29921,7 +29941,7 @@ snapshots:
 
   axios@0.27.2:
     dependencies:
-      follow-redirects: 1.15.9(debug@4.4.0)
+      follow-redirects: 1.15.9
       form-data: 4.0.1
     transitivePeerDependencies:
       - debug
@@ -29945,6 +29965,14 @@ snapshots:
   axios@1.7.8:
     dependencies:
       follow-redirects: 1.15.9(debug@4.4.0)
+      form-data: 4.0.1
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.7.9:
+    dependencies:
+      follow-redirects: 1.15.9
       form-data: 4.0.1
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
@@ -31991,6 +32019,10 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
+  debug@4.4.0:
+    dependencies:
+      ms: 2.1.3
+
   debug@4.4.0(supports-color@5.5.0):
     dependencies:
       ms: 2.1.3
@@ -32880,7 +32912,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.6
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       escape-string-regexp: 4.0.0
       eslint-scope: 8.2.0
       eslint-visitor-keys: 4.2.0
@@ -33463,6 +33495,8 @@ snapshots:
     dependencies:
       async: 0.2.10
       which: 1.3.1
+
+  follow-redirects@1.15.9: {}
 
   follow-redirects@1.15.9(debug@4.3.7):
     optionalDependencies:
@@ -34476,6 +34510,8 @@ snapshots:
       htmlparser2: 8.0.2
       selderee: 0.11.0
 
+  html-url-attributes@3.0.1: {}
+
   html-void-elements@3.0.0: {}
 
   html-webpack-plugin@5.6.3(webpack@5.97.1(@swc/core@1.10.1(@swc/helpers@0.5.15))):
@@ -34544,7 +34580,7 @@ snapshots:
   http-proxy-agent@7.0.2:
     dependencies:
       agent-base: 7.1.3
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -34602,14 +34638,14 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
   https-proxy-agent@7.0.6:
     dependencies:
       agent-base: 7.1.3
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -37204,7 +37240,7 @@ snapshots:
   micromark@4.0.1:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       decode-named-character-reference: 1.0.2
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.2
@@ -37957,7 +37993,7 @@ snapshots:
       '@yarnpkg/lockfile': 1.1.0
       '@yarnpkg/parsers': 3.0.0-rc.46
       '@zkochan/js-yaml': 0.0.7
-      axios: 1.7.9(debug@4.4.0)
+      axios: 1.7.9
       chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
@@ -39892,6 +39928,10 @@ snapshots:
       react-fast-compare: 3.2.2
       shallowequal: 1.1.0
 
+  react-icons@5.4.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+
   react-is@16.13.1: {}
 
   react-is@18.3.1: {}
@@ -39905,6 +39945,23 @@ snapshots:
       '@babel/runtime': 7.26.0
       react-loadable: '@docusaurus/react-loadable@6.0.0(react@18.3.1)'
       webpack: 5.97.1(@swc/core@1.10.1(@swc/helpers@0.5.15))
+
+  react-markdown@9.0.1(@types/react@18.3.12)(react@18.3.1):
+    dependencies:
+      '@types/hast': 3.0.4
+      '@types/react': 18.3.12
+      devlop: 1.1.0
+      hast-util-to-jsx-runtime: 2.3.2
+      html-url-attributes: 3.0.1
+      mdast-util-to-hast: 13.2.0
+      react: 18.3.1
+      remark-parse: 11.0.0
+      remark-rehype: 11.1.1
+      unified: 11.0.5
+      unist-util-visit: 5.0.0
+      vfile: 6.0.3
+    transitivePeerDependencies:
+      - supports-color
 
   react-refresh@0.14.2: {}
 
@@ -40984,7 +41041,7 @@ snapshots:
   socks-proxy-agent@8.0.5:
     dependencies:
       agent-base: 7.1.3
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       socks: 2.8.3
     transitivePeerDependencies:
       - supports-color
@@ -41994,7 +42051,7 @@ snapshots:
   tuf-js@2.2.1:
     dependencies:
       '@tufjs/models': 2.0.1
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       make-fetch-happen: 13.0.1
     transitivePeerDependencies:
       - supports-color
@@ -42683,7 +42740,7 @@ snapshots:
   vite-node@2.1.5(@types/node@22.10.2)(terser@5.37.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       es-module-lexer: 1.5.4
       pathe: 1.1.2
       vite: 5.4.11(@types/node@22.10.2)(terser@5.37.0)
@@ -42796,7 +42853,7 @@ snapshots:
       '@vitest/spy': 2.1.5
       '@vitest/utils': 2.1.5
       chai: 5.1.2
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       expect-type: 1.1.0
       magic-string: 0.30.17
       pathe: 1.1.2
