@@ -158,11 +158,22 @@ export type InterestChats = {
     };
 };
 
+// Add new interfaces for command handling
+interface CommandHandler {
+    handler: (ctx: Context) => Promise<void>;
+    description?: string;
+}
+
+interface CommandConfig {
+    [command: string]: CommandHandler;
+}
+
 export class MessageManager {
     public bot: Telegraf<Context>;
     private runtime: IAgentRuntime;
     private interestChats: InterestChats = {};
     private teamMemberUsernames: Map<string, string> = new Map();
+    private commands: CommandConfig = {};  // Add this new property
 
     constructor(bot: Telegraf<Context>, runtime: IAgentRuntime) {
         this.bot = bot;
@@ -174,6 +185,151 @@ export class MessageManager {
                 error
             )
         );
+
+        // Initialize default commands
+        this._initializeDefaultCommands();
+    }
+
+    // Add new method to initialize default commands
+    private _initializeDefaultCommands(): void {
+        // Helper function to handle commands with type checking
+        const handleCommand = async (ctx: Context, command: string, args: string[] = []) => {
+            if (!ctx.message) return;
+
+            // Type guard for text messages
+            if (!('text' in ctx.message)) {
+                await ctx.reply('Please send text commands only.');
+                return;
+            }
+
+            // For commands that require arguments, check if they're provided
+            if (args.length === 0 && ctx.message.text) {
+                args = ctx.message.text.split(' ').slice(1);
+            }
+
+            // Forward to agent for response
+            const response = await this._generateCommandResponse(ctx, command, args);
+            if (response?.text) {
+                await ctx.reply(response.text);
+            }
+        };
+
+        this.registerCommand('start', {
+            handler: async (ctx) => {
+                const welcomeMessage = `🚀 Welcome to MemeBot!
+
+I'm your AI-powered meme coin assistant. I help you track prices, monitor trends, and analyze meme coins.
+
+Type /help to see available commands.`;
+                await ctx.reply(welcomeMessage);
+            },
+            description: 'Start the bot and get welcome message'
+        });
+
+        this.registerCommand('help', {
+            handler: async (ctx) => {
+                const helpMessage = 'Choose a command:';
+                await ctx.reply(helpMessage, {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                { text: "💰 Price Check", callback_data: "cmd_price" },
+                                { text: "🔔 Set Alert", callback_data: "cmd_alert" }
+                            ],
+                            [
+                                { text: "👀 Monitor Coin", callback_data: "cmd_monitor" },
+                                { text: "📊 Daily Update", callback_data: "cmd_daily" }
+                            ],
+                            [
+                                { text: "🆕 New Coins", callback_data: "cmd_new" },
+                                { text: "📱 Social Metrics", callback_data: "cmd_social" }
+                            ],
+                            [
+                                { text: "🐋 Whale Tracking", callback_data: "cmd_whale" },
+                                { text: "⚠️ Risk Analysis", callback_data: "cmd_risk" }
+                            ]
+                        ]
+                    }
+                });
+            },
+            description: 'List all available commands and their usage'
+        });
+
+        // Handle button clicks
+        this.bot.action(/cmd_(.+)/, async (ctx) => {
+            const command = ctx.match[1];
+            await ctx.answerCbQuery(); // Acknowledge the button click
+
+            // For commands that need parameters
+            if (['price', 'monitor', 'social', 'whale', 'risk'].includes(command)) {
+                await ctx.reply(`Enter coin symbol for ${command}.\nExample: /${command} pepe`);
+            }
+            else if (command === 'alert') {
+                await ctx.reply('Enter coin and price.\nExample: /alert pepe 0.00001');
+            }
+            // For commands without parameters, forward directly to agent
+            else if (['daily', 'new'].includes(command)) {
+                await handleCommand(ctx, command);
+            }
+        });
+
+        // Register commands that require coin symbol
+        ['price', 'monitor', 'social', 'whale', 'risk'].forEach(cmd => {
+            this.registerCommand(cmd, {
+                handler: async (ctx) => await handleCommand(ctx, cmd),
+                description: `Get ${cmd} information`
+            });
+        });
+
+        // Register command that requires coin and price
+        this.registerCommand('alert', {
+            handler: async (ctx) => await handleCommand(ctx, 'alert'),
+            description: 'Set price alert'
+        });
+
+        // Register commands without parameters
+        ['daily', 'new', 'treemap', 'recommend', 'dashboard'].forEach(cmd => {
+            this.registerCommand(cmd, {
+                handler: async (ctx) => await handleCommand(ctx, cmd),
+                description: `Get ${cmd} information`
+            });
+        });
+    }
+
+    // Add new method to register custom commands
+    public registerCommand(command: string, handler: CommandHandler): void {
+        this.commands[command] = handler;
+        this.bot.command(command, async (ctx) => {
+            try {
+                await handler.handler(ctx);
+            } catch (error) {
+                elizaLogger.error(`Error handling command /${command}:`, error);
+                await ctx.reply('Sorry, there was an error processing your command.');
+            }
+        });
+    }
+
+    // Add new method to handle commands
+    private async _handleCommand(ctx: Context): Promise<boolean> {
+        if (!ctx.message || !('text' in ctx.message) || !ctx.message.text.startsWith('/')) {
+            return false;
+        }
+
+        const [command] = ctx.message.text.split(' ');
+        const commandName = command.substring(1); // Remove the '/' prefix
+
+        if (this.commands[commandName]) {
+            try {
+                await this.commands[commandName].handler(ctx);
+                return true;
+            } catch (error) {
+                elizaLogger.error(`Error handling command /${commandName}:`, error);
+                await ctx.reply('Sorry, there was an error processing your command.');
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private async _initializeTeamMemberUsernames(): Promise<void> {
@@ -796,10 +952,87 @@ export class MessageManager {
         return response;
     }
 
+    private async _generateCommandResponse(
+        ctx: Context,
+        command: string,
+        args: string[]
+    ): Promise<Content> {
+        if (!ctx.message || !('text' in ctx.message)) {
+            return null;
+        }
+
+        // Create a more natural message for the agent
+        let naturalMessage = '';
+        const username = ctx.from?.username || 'User';
+
+        switch(command) {
+            case 'start':
+                naturalMessage = `Hi ${username} here! I'm new to meme coins and looking for guidance. Can you help me get started?`;
+                break;
+            case 'price':
+                naturalMessage = `Hey, I'm interested in ${args[0]}. Can you give me a detailed price analysis and current metrics?`;
+                break;
+            case 'alert':
+                naturalMessage = `I want to be notified when ${args[0]} reaches ${args[1]}. Can you set up an alert and explain what to expect at that price point?`;
+                break;
+            case 'monitor':
+                naturalMessage = `I want to keep track of ${args[0]}. Can you monitor it and notify me of significant changes or events?`;
+                break;
+            case 'daily':
+                naturalMessage = `Can you give me today's meme coin market roundup? I'm particularly interested in trending coins and major movements.`;
+                break;
+            case 'new':
+                naturalMessage = `What are the newest trending meme coins? I'm looking for fresh opportunities with good potential.`;
+                break;
+            case 'social':
+                naturalMessage = `What's the social sentiment and community engagement like for ${args[0]}? I want to understand its social metrics.`;
+                break;
+            case 'whale':
+                naturalMessage = `Have there been any significant whale movements for ${args[0]}? I'm interested in large holder activities.`;
+                break;
+            case 'risk':
+                naturalMessage = `Can you do a comprehensive risk assessment for ${args[0]}? I want to understand potential risks and red flags.`;
+                break;
+            default:
+                naturalMessage = `${username} is asking about /${command} ${args.join(" ")}. Please provide relevant information.`;
+        }
+
+        const message: Memory = {
+            id: stringToUuid(ctx.message.message_id.toString() + "-" + this.runtime.agentId),
+            agentId: this.runtime.agentId,
+            userId: stringToUuid(ctx.from.id.toString()),
+            roomId: stringToUuid(ctx.chat.id.toString() + "-" + this.runtime.agentId),
+            content: {
+                text: naturalMessage,
+                source: "telegram",
+                command: {
+                    name: command,
+                    args: args
+                }
+            },
+            createdAt: Date.now(),
+            embedding: getEmbeddingZeroVector(),
+        };
+
+        const state = await this.runtime.composeState(message);
+        const context = composeContext({
+            state,
+            template: this.runtime.character.templates?.telegramMessageHandlerTemplate || telegramMessageHandlerTemplate,
+        });
+
+        return this._generateResponse(message, state, context);
+    }
+
     // Main handler for incoming messages
     public async handleMessage(ctx: Context): Promise<void> {
         if (!ctx.message || !ctx.from) {
-            return; // Exit if no message or sender info
+            return;
+        }
+
+        // Check for commands first
+        const isCommand = await this._handleCommand(ctx);
+        if (isCommand) {
+            return;
         }
 
         if (
