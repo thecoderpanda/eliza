@@ -210,6 +210,7 @@ export type Models = {
     [ModelProviderName.VENICE]: Model;
     [ModelProviderName.AKASH_CHAT_API]: Model;
     [ModelProviderName.LIVEPEER]: Model;
+    [ModelProviderName.DEEPSEEK]: Model;
 };
 
 /**
@@ -240,6 +241,7 @@ export enum ModelProviderName {
     VENICE = "venice",
     AKASH_CHAT_API = "akash_chat_api",
     LIVEPEER = "livepeer",
+    DEEPSEEK = "deepseek",
 }
 
 /**

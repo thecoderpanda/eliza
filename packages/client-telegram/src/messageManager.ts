@@ -216,12 +216,42 @@ export class MessageManager {
 
         this.registerCommand('start', {
             handler: async (ctx) => {
-                const welcomeMessage = `🚀 Welcome to MemeBot!
+                const username = ctx.from?.first_name || 'there';
+                const welcomeMessage = `Hey ${username}! 👋
 
-I'm your AI-powered meme coin assistant. I help you track prices, monitor trends, and analyze meme coins.
+🚀 I'm your AI-powered Meme Coin Assistant! I help you track and analyze the latest meme coins.
 
-Type /help to see available commands.`;
+Here's what I can do:
+• 💰 Check coin prices and stats
+• 🔔 Set price alerts (Coming soon!)
+• 📊 Get daily market updates
+• 🆕 Discover new trending coins
+
+Try these commands:
+1. Click the Menu button or type /help to see all commands
+2. Try "/price pepe" to check PEPE price
+3. Type "/daily" for today's meme market update
+
+Need help? Just ask! 😊`;
+
+                // Send welcome message first
                 await ctx.reply(welcomeMessage);
+
+                // Then show the command menu
+                await ctx.reply('Quick access to commands:', {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                { text: "💰 Price Check", callback_data: "cmd_price" },
+                                { text: "🔔 Set Alert", callback_data: "cmd_alert" }
+                            ],
+                            [
+                                { text: "📊 Daily Update", callback_data: "cmd_daily" },
+                                { text: "🆕 New Coins", callback_data: "cmd_new" }
+                            ]
+                        ]
+                    }
+                });
             },
             description: 'Start the bot and get welcome message'
         });
@@ -241,12 +271,7 @@ Type /help to see available commands.`;
                                 { text: "📊 Daily Update", callback_data: "cmd_daily" }
                             ],
                             [
-                                { text: "🆕 New Coins", callback_data: "cmd_new" },
-                                { text: "📱 Social Metrics", callback_data: "cmd_social" }
-                            ],
-                            [
-                                { text: "🐋 Whale Tracking", callback_data: "cmd_whale" },
-                                { text: "⚠️ Risk Analysis", callback_data: "cmd_risk" }
+                                { text: "🆕 New Coins", callback_data: "cmd_new" }
                             ]
                         ]
                     }
@@ -260,21 +285,32 @@ Type /help to see available commands.`;
             const command = ctx.match[1];
             await ctx.answerCbQuery(); // Acknowledge the button click
 
-            // For commands that need parameters
-            if (['price', 'monitor', 'social', 'whale', 'risk'].includes(command)) {
-                await ctx.reply(`Enter coin symbol for ${command}.\nExample: /${command} pepe`);
-            }
-            else if (command === 'alert') {
-                await ctx.reply('Enter coin and price.\nExample: /alert pepe 0.00001');
-            }
-            // For commands without parameters, forward directly to agent
-            else if (['daily', 'new'].includes(command)) {
-                await handleCommand(ctx, command);
+            switch(command) {
+                case 'price':
+                    await ctx.reply('Which coin would you like to check? 🔍\nJust type the name (e.g., pepe)');
+                    break;
+                case 'alert':
+                    await ctx.reply(`Set up your alert 🔔
+What type of alert do you want?
+• Price target
+• Volume spike
+• Whale movement
+• Social trend
+
+Format: /alert <type> <coin> <value>
+Example: /alert price pepe 0.00001
+
+Note: Alert system is work in progress 🚧`);
+                    break;
+                default:
+                    // Forward all other commands directly to agent
+                    await handleCommand(ctx, command);
+                    break;
             }
         });
 
         // Register commands that require coin symbol
-        ['price', 'monitor', 'social', 'whale', 'risk'].forEach(cmd => {
+        ['price', 'monitor'].forEach(cmd => {
             this.registerCommand(cmd, {
                 handler: async (ctx) => await handleCommand(ctx, cmd),
                 description: `Get ${cmd} information`
@@ -288,7 +324,7 @@ Type /help to see available commands.`;
         });
 
         // Register commands without parameters
-        ['daily', 'new', 'treemap', 'recommend', 'dashboard'].forEach(cmd => {
+        ['daily', 'new'].forEach(cmd => {
             this.registerCommand(cmd, {
                 handler: async (ctx) => await handleCommand(ctx, cmd),
                 description: `Get ${cmd} information`
@@ -961,40 +997,28 @@ Type /help to see available commands.`;
             return null;
         }
 
-        // Create a more natural message for the agent
+        // Create message for the agent
         let naturalMessage = '';
         const username = ctx.from?.username || 'User';
 
         switch(command) {
-            case 'start':
-                naturalMessage = `Hi ${username} here! I'm new to meme coins and looking for guidance. Can you help me get started?`;
-                break;
             case 'price':
-                naturalMessage = `Hey, I'm interested in ${args[0]}. Can you give me a detailed price analysis and current metrics?`;
+                if (!args[0]) {
+                    await ctx.reply('Please provide a coin name.');
+                    return null;
+                }
+                naturalMessage = `What's the current price of ${args[0]}?`;
                 break;
             case 'alert':
-                naturalMessage = `I want to be notified when ${args[0]} reaches ${args[1]}. Can you set up an alert and explain what to expect at that price point?`;
-                break;
-            case 'monitor':
-                naturalMessage = `I want to keep track of ${args[0]}. Can you monitor it and notify me of significant changes or events?`;
-                break;
-            case 'daily':
-                naturalMessage = `Can you give me today's meme coin market roundup? I'm particularly interested in trending coins and major movements.`;
-                break;
-            case 'new':
-                naturalMessage = `What are the newest trending meme coins? I'm looking for fresh opportunities with good potential.`;
-                break;
-            case 'social':
-                naturalMessage = `What's the social sentiment and community engagement like for ${args[0]}? I want to understand its social metrics.`;
-                break;
-            case 'whale':
-                naturalMessage = `Have there been any significant whale movements for ${args[0]}? I'm interested in large holder activities.`;
-                break;
-            case 'risk':
-                naturalMessage = `Can you do a comprehensive risk assessment for ${args[0]}? I want to understand potential risks and red flags.`;
+                if (args.length < 3) {
+                    await ctx.reply('Please provide alert type, coin and value.\nExample: /alert price pepe 0.00001');
+                    return null;
+                }
+                naturalMessage = `Alert set for ${args[1]} - ${args[0]} alert at ${args[2]}. (WIP)`;
                 break;
             default:
-                naturalMessage = `${username} is asking about /${command} ${args.join(" ")}. Please provide relevant information.`;
+                // For all other commands, just forward the command and args to agent
+                naturalMessage = `/${command} ${args.join(" ")}`;
         }
 
         const message: Memory = {
