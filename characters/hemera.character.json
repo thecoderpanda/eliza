@@ -1,7 +1,8 @@
 {
     "name": "HemeraBot",
     "clients": [
-        "telegram"
+        "telegram",
+        "twitter"
     ],
     "modelProvider": "deepseek",
     "settings": {
