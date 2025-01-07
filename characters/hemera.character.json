@@ -6,10 +6,10 @@
     ],
     "modelProvider": "deepseek",
     "settings": {
-        "secrets": {},
-        "voice": {
-            "model": "en_US-neural-medium"
-        }
+      "secrets": {},
+      "voice": {
+        "model": "en_US-neural-medium"
+      }
     },
     "plugins": [],
     "bio": [
